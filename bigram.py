@@ -39,8 +39,8 @@ print(f'transferred model th the device ({device})')
 logits, loss = m(xb, yb)
 
 
-# idx = torch.zeros((1, 1), dtype=torch.long, device=device)
-# print(decode(m.generate(idx, max_new_tokens=100)[0].tolist()))
+idx = torch.zeros((1, 1), dtype=torch.long, device=device)
+print(decode(m.generate(idx, max_new_tokens=100)[0].tolist()))
 
 # optim
 optimizer = torch.optim.AdamW(m.parameters(), lr=1e-3)
