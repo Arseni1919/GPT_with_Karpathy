@@ -248,7 +248,7 @@ n_layer = 6
 dropout = 0.2
 ```
 
-### The Train Loop
+## The Train Loop
 
 ```python
 from bigram_functions_classes import *
