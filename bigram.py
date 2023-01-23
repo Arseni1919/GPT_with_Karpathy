@@ -35,11 +35,12 @@ xb, yb = get_batch('train', train_data, val_data)
 
 model = BigramLanguageModel(vocab_size)
 m = model.to(device)
+print(f'transferred model th the device ({device})')
 logits, loss = m(xb, yb)
 
 
-idx = torch.zeros((1, 1), dtype=torch.long, device=device)
-print(decode(m.generate(idx, max_new_tokens=100)[0].tolist()))
+# idx = torch.zeros((1, 1), dtype=torch.long, device=device)
+# print(decode(m.generate(idx, max_new_tokens=100)[0].tolist()))
 
 # optim
 optimizer = torch.optim.AdamW(m.parameters(), lr=1e-3)
@@ -63,19 +64,19 @@ for iter in range(max_iters):
     optimizer.step()
 
     # plot
-#     if iter % eval_interval == 0:
-#         plt.cla()
-#         plt.title(f'On the {device=}')
-#         plt.plot(losses_plot_dict["train"], label='train')
-#         plt.plot(losses_plot_dict["val"], label='val')
-#         plt.legend()
-#         plt.pause(0.01)
-# plt.show()
+    if iter % eval_interval == 0:
+        plt.cla()
+        plt.title(f'On the {device=}')
+        plt.plot(losses_plot_dict["train"], label='train')
+        plt.plot(losses_plot_dict["val"], label='val')
+        plt.legend()
+        plt.pause(0.01)
+plt.show()
 
 
 print(loss.item())
 context = torch.zeros((1, 1), dtype=torch.long, device=device)
-print(decode(m.generate(context, max_new_tokens=100)[0].tolist()))
+print(decode(m.generate(context, max_new_tokens=500)[0].tolist()))
 
 
 
