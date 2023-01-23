@@ -53,7 +53,7 @@ for iter in range(max_iters):
         losses = estimate_loss(m, train_data, val_data)
         losses_plot_dict['train'].append(losses["train"])
         losses_plot_dict['val'].append(losses["val"])
-        print(f'step {iter}: train loss {losses["train"]:.4f}, val loss {losses["val"]:.4f}')
+        print(f'\n[{device}] step {iter}: train loss {losses["train"]:.4f}, val loss {losses["val"]:.4f}')
 
     xb, yb = get_batch('train', train_data, val_data)
 
@@ -63,19 +63,19 @@ for iter in range(max_iters):
     optimizer.step()
 
     # plot
-    if iter % eval_interval == 0:
-        plt.cla()
-        plt.title(f'On the {device=}')
-        plt.plot(losses_plot_dict["train"], label='train')
-        plt.plot(losses_plot_dict["val"], label='val')
-        plt.legend()
-        plt.pause(0.01)
+#     if iter % eval_interval == 0:
+#         plt.cla()
+#         plt.title(f'On the {device=}')
+#         plt.plot(losses_plot_dict["train"], label='train')
+#         plt.plot(losses_plot_dict["val"], label='val')
+#         plt.legend()
+#         plt.pause(0.01)
+# plt.show()
 
 
 print(loss.item())
 context = torch.zeros((1, 1), dtype=torch.long, device=device)
 print(decode(m.generate(context, max_new_tokens=100)[0].tolist()))
-plt.show()
 
 
 

@@ -5,13 +5,14 @@ import matplotlib.pyplot as plt
 
 batch_size = 32
 block_size = 8
-max_iters = 30000
+max_iters = 10000
 eval_interval = 300
 learning_rate = 1e-2
-if torch.backends.mps.is_available() and torch.backends.mps.is_built():
-    device = torch.device("mps")
-else:
-    device = 'cpu'
+device = 'cpu'
+# if torch.backends.mps.is_available() and torch.backends.mps.is_built():
+#     device = torch.device("mps")
+# else:
+#     device = 'cpu'
 eval_iters = 200
 
 
