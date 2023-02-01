@@ -3,18 +3,18 @@ import torch.nn as nn
 from torch.nn import functional as F
 import matplotlib.pyplot as plt
 
-# batch_size = 64  # !!!
-batch_size = 32
+batch_size = 64  # !!!
+# batch_size = 32
 block_size = 256
 # max_iters = 1000
 max_iters = 10
-eval_interval = 2
+eval_interval = 5
 learning_rate = 3e-4
-device = 'cpu'
-# if torch.backends.mps.is_available() and torch.backends.mps.is_built():
-#     device = torch.device("mps")
-# else:
-#     device = 'cpu'
+# device = 'cpu'
+if torch.backends.mps.is_available() and torch.backends.mps.is_built():
+    device = torch.device("mps")
+else:
+    device = 'cpu'
 eval_iters = 1
 n_embd = 384  # number for embedding dimensions
 # n_head = 6  # !!!
@@ -32,9 +32,9 @@ def estimate_loss(model, train_data, val_data):
         losses = torch.zeros(eval_iters)
         for k in range(eval_iters):
             X, Y = get_batch(split, train_data, val_data)
-            print('before model')
+            # print('before model')
             logits, loss = model(X, Y)
-            print('after model')
+            # print('after model')
             losses[k] = loss.item()
         out[split] = losses.mean()
     model.train()

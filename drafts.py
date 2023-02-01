@@ -7,6 +7,7 @@ print(torch.backends.mps.is_built())
 
 dtype = torch.float
 device = torch.device("mps")
+device = torch.device("cpu")
 
 # Create random input and output data
 x = torch.linspace(-math.pi, math.pi, 2000, device=device, dtype=dtype)
