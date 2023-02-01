@@ -7,20 +7,20 @@ batch_size = 64  # !!!
 # batch_size = 32
 block_size = 256
 # max_iters = 1000
-max_iters = 10
+max_iters = 100
 eval_interval = 5
 learning_rate = 3e-4
-# device = 'cpu'
 if torch.backends.mps.is_available() and torch.backends.mps.is_built():
     device = torch.device("mps")
 else:
     device = 'cpu'
+# device = 'cpu'
 eval_iters = 1
 n_embd = 384  # number for embedding dimensions
 # n_head = 6  # !!!
 # n_layer = 6  # !!!
-n_head = 3
-n_layer = 3
+n_head = 4
+n_layer = 4
 dropout = 0.2
 
 
@@ -166,8 +166,10 @@ class BigramLanguageModel(nn.Module):
             loss = None
         return logits, loss
 
-    def generate(self, idx, max_new_tokens):
-        for _ in range(max_new_tokens):
+    def generate(self, idx, max_new_tokens, to_print=False):
+        for i in range(max_new_tokens):
+            if to_print:
+                print(f'generation {i}/{max_new_tokens}..')
             idx_cond = idx[:, -block_size:]
             logits, loss = self(idx_cond)
             logits = logits[:, -1, :]

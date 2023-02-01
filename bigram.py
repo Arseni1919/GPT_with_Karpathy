@@ -35,12 +35,12 @@ xb, yb = get_batch('train', train_data, val_data)
 
 model = BigramLanguageModel(vocab_size)
 m = model.to(device)
-print(f'transferred model th the device ({device})')
+print(f'transferred model to the device ({device})')
 logits, loss = m(xb, yb)
 
 
 idx = torch.zeros((1, 1), dtype=torch.long, device=device)
-print(decode(m.generate(idx, max_new_tokens=100)[0].tolist()))
+print(decode(m.generate(idx, max_new_tokens=10)[0].tolist()))
 
 # optim
 optimizer = torch.optim.AdamW(m.parameters(), lr=1e-3)
@@ -71,12 +71,15 @@ for iter in range(max_iters):
         plt.plot(losses_plot_dict["val"], label='val')
         plt.legend()
         plt.pause(0.01)
-plt.show()
+# plt.show()
 
 
+print()
 print(loss.item())
+print('before context')
 context = torch.zeros((1, 1), dtype=torch.long, device=device)
-print(decode(m.generate(context, max_new_tokens=500)[0].tolist()))
+print('before decode')
+print(decode(m.generate(context, max_new_tokens=100, to_print=True)[0].to(device).tolist()))
 
 
 
